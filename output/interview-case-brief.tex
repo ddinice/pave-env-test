@@ -1,0 +1,122 @@
+\documentclass[10pt,a4paper]{article}
+
+\usepackage{array}
+\usepackage[a4paper,top=3.5cm,bottom=2.5cm,left=2cm,right=2cm,headheight=50pt,headsep=20pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{tabularx}
+\usepackage{xcolor}
+
+\definecolor{ink}{HTML}{17191F}
+\definecolor{muted}{HTML}{5D6470}
+\definecolor{accent}{HTML}{4B57B8}
+\definecolor{accentlight}{HTML}{EEF0FF}
+
+\newcommand{\companyname}{Take-home case | Full-Stack Engineer}
+\newcommand{\documentdate}{\today}
+\newcommand{\versionnumber}{1.0}
+\renewcommand{\familydefault}{\sfdefault}
+\linespread{1.1}
+
+\hypersetup{colorlinks=true,urlcolor=accent,linkcolor=accent,pdfauthor={Case interview}}
+\renewcommand{\headrulewidth}{0pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{%
+  \begin{tabular}{l}
+    \footnotesize{Date : \documentdate}\\
+    \footnotesize{Version : \versionnumber}
+  \end{tabular}
+}
+\fancyhead[R]{%
+  \raisebox{-0.1\height}{\includegraphics[width=2.5cm]{PAVE_Logo_NOIR_RVB_WEB.png}}
+}
+\fancyfoot[L]{\footnotesize{\companyname}}
+\fancyfoot[C]{\footnotesize{Confidential}}
+\fancyfoot[R]{\footnotesize{\thepage}}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\leftmargini}{1.15em}
+\setlength{\itemsep}{1.5pt}
+\newcommand{\labeltext}[1]{\textcolor{accent}{\textbf{#1}}}
+\newcommand{\callout}[1]{\noindent\colorbox{accentlight}{\parbox{\dimexpr\linewidth-2\fboxsep\relax}{\textcolor{ink}{#1}}}}
+\newcommand{\smallcaps}[1]{\textcolor{muted}{\textsf{\footnotesize\bfseries #1}}}
+
+\begin{document}
+\color{ink}
+
+\vspace*{0.25cm}
+
+{\fontsize{21}{24}\selectfont\bfseries
+  \parbox{\linewidth}{Design Variable Workflows:\\Pull, Push, Improve}\par}
+\vspace{3pt}
+{\large\color{muted}Turn a rough product brief into a useful, tested workflow for pulling and pushing shared design data.\par}
+
+\callout{\labeltext{Timebox:} roughly one working day (about 8 hours) using agentic development. You may spend more or less time; prioritize the choices that make the workflow genuinely easy to use.}
+
+\section{What we want to learn}
+\begin{tabularx}{\linewidth}{@{}>{\labeltext}p{0.28\linewidth}X@{}}
+User orientation & Can you understand the day-to-day problem and make the workflow easy to discover, operate, and recover from?\\
+Product thinking & Can you turn incomplete requirements into a coherent feature with sensible assumptions and boundaries?\\
+Existing-code fluency & Can you work effectively in an unfamiliar repository and extend its patterns?\\
+End-to-end ownership & Can you take a feature from rough idea through implementation, tests, and usable documentation?
+\end{tabularx}
+
+\section{What we are not trying to learn}
+You do not need to invent a design system, choose a particular technology stack, or produce a technically elegant solution for its own sake. Pragmatic, understandable decisions are more valuable than cleverness.
+
+\section{The existing product}
+The repository contains a small Design Variable Registry. It has an authenticated web UI backed by a central database of design-variable values. Variables are uniquely identified by ID. Users can browse variables, filter them, and edit them through the UI. The baseline also includes role-based editing, seeded example data, a read-only authenticated API example, unit tests, and Playwright E2E infrastructure. Use the repository README for local setup and credentials.
+
+\section{The user problem}
+Users run dozens of analysis tools locally: MATLAB, Python, CAD, FEM, and other software. These tools need the registry's design variables as inputs, and their outputs often need to update the same variables.
+
+\callout{Today, a user must manually copy values out of the web app, run an analysis, and then update values one by one in the web app. With roughly 50 variables, three workflows, and three pull/push cycles per day, this is repetitive and error-prone.}
+
+\section{Your challenge}
+Find and implement a more efficient workflow for pulling information from, and pushing information to, the central Design Variable Registry. The workflow may be exposed through the web app, a local tool, an API, a generated file, or a combination of approaches. Choose what best serves the users and explain why.
+
+\textbf{Your implementation should be usable by a real colleague, not only demonstrable by its author.} You may add, remove, or replace placeholder data in the app as needed.
+
+\section{Working assumptions}
+Use these as the starting constraints. Where the brief is ambiguous, make realistic assumptions and record the major ones for review.
+
+\begin{itemize}
+  \item About 50 people are expected to use the solution.
+  \item This app is part of a larger set of tools. Design-variable data must remain accessible from the PostgreSQL database and remain readable and writable through the existing web app, even if you add another read/write surface.
+  \item Where relevant, use the Linear app as the baseline for product taste and UI/UX: sleek, minimalist, and oriented toward power users, including support for useful keyboard shortcuts.
+  \item Users work on macOS, Windows, and Linux and have different levels of technical comfort.
+  \item Users have Codex or Claude installed, or can install them easily.
+  \item Users use the design-variable information in dozens of tools and scripts, including MATLAB, Python, CAD, and FEM tools, and those tools produce the outputs that may be pushed back. The workflow should be agnostic to how the information is used or produced; it should not only support one tool or language.
+  \item The company has a shared GitLab that all employees can access.
+  \item Each user has three workflows that pull and push design variables. For example: “Update mass using Model 1,” “Update cost estimates using Model 2,” and “Update performance estimates using Model 3.”
+  \item Users may need to add, remove, or modify the variables used in their workflows on a weekly basis.
+  \item For each workflow, assume that up to 50 variables may be pulled and up to 50 variables may be pushed per run. The variables going in and out do not need to be the same, and each workflow is run about three times per day.
+  \item All users may read all design variables. Existing product permissions govern who may update them; preserve or sensibly extend this behavior.
+  \item At minimum, the system should show who last edited a variable. You may improve the model if your workflow benefits from it.
+  \item You may assume that two users will not update the same outputs at the same time.
+  \item You have carte blanche to change the schema, dependencies, and repository structure, or create a separate repository for code that runs on a user's machine.
+  \item Internet access, AI coding tools, and existing GitLab repositories are allowed.
+\end{itemize}
+
+\section{Expected submission}
+\begin{enumerate}
+  \item \textbf{An implemented feature} that demonstrates your chosen pull/push workflow in the provided codebase or an appropriately connected companion repository.
+  \item \textbf{A user guide} explaining installation and everyday use for a colleague who may need help getting started.
+  \item \textbf{Tests appropriate to your solution.} Decide what unit, regression, integration, and/or E2E coverage gives confidence that the important workflow works. Explain notable omissions.
+  \item \textbf{A short assumptions and decisions note.} Record the major assumptions, trade-offs, limitations, and what you would do next with more time.
+  \item \textbf{A rollout perspective.} Explain how you would split up the implementation and roll it out. You do not need to ship the entire solution in one go; call out a sensible first release and future iterations or improvements you foresee.
+  \item \textbf{Presentation slides.} Prepare a short slide deck to present what you implemented during the technical interview, including the key workflow, notable decisions, and any important limitations or next steps.
+\end{enumerate}
+
+\vfill
+\callout{\labeltext{Final note:} There is no single expected architecture or “correct” interface. We are interested in the quality of your product decisions, implementation, testing judgment, and ability to make a rough requirement concrete.}
+
+\end{document}

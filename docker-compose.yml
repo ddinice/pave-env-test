@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: case_study
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d case_study"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - case-study-db-data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/case_study
+      SESSION_SECRET: development-only-session-secret
+      NEXT_PUBLIC_ENABLE_AGENTATION: "1"
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    volumes:
+      - case-study-web-node-modules:/app/node_modules
+
+volumes:
+  case-study-db-data:
+  case-study-web-node-modules:

@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ANALYST
+  ENGINEERING_LEAD
+}
+
+model User {
+  id                   String           @id @default(cuid())
+  email                String           @unique
+  name                 String
+  role                 Role
+  passwordHash         String
+  lastUpdatedVariables DesignVariable[] @relation("DesignVariableLastUpdatedBy")
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+}
+
+model DesignVariable {
+  id              String    @id @default(cuid())
+  externalKey     String    @unique
+  name            String
+  value           String
+  unit            String
+  subsystem       String
+  description     String
+  isProtected     Boolean   @default(false)
+  updatedByUserId String?
+  updatedByUser   User?     @relation("DesignVariableLastUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([subsystem])
+}

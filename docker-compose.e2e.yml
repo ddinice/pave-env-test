@@ -1,0 +1,19 @@
+services:
+  db-e2e:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: case_study_e2e
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d case_study_e2e"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+    volumes:
+      - case-study-e2e-db-data:/var/lib/postgresql/data
+
+volumes:
+  case-study-e2e-db-data:
