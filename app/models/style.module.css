@@ -1,0 +1,172 @@
+.editableSection {
+  margin-top: 1.5rem;
+}
+.readOnlyNotice {
+  margin-bottom: 1.25rem;
+}
+.modelMeta {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+}
+
+.form {
+  display: grid;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.titleRow {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+}
+.titleField {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+.titleInput {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  min-width: 0;
+  padding: 0.1rem 0.3rem;
+  width: 100%;
+}
+.titleInput:hover {
+  background: var(--surface-1);
+}
+.titleInput:focus-visible {
+  background: var(--surface-1);
+  outline: 2px solid color-mix(in srgb, var(--primary-focus) 45%, transparent);
+}
+.titlePencil {
+  color: var(--ink-tertiary);
+  flex-shrink: 0;
+  height: 1.1rem;
+  width: 1.1rem;
+}
+
+.titleActions {
+  align-items: center;
+  display: flex;
+  flex-shrink: 0;
+  gap: 0.6rem;
+  padding-top: 0.4rem;
+}
+.ownerName {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+}
+.menuWrap {
+  position: relative;
+}
+.menuTrigger {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  letter-spacing: -0.1em;
+  padding: 0.3rem 0.5rem;
+}
+.menuTrigger:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.menu {
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  box-shadow: 0 12px 24px rgb(0 0 0 / 35%);
+  min-width: 10rem;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.3rem);
+  z-index: 10;
+}
+.menu button {
+  background: transparent;
+  border: 0;
+  color: #ff9b9b;
+  cursor: pointer;
+  display: block;
+  font-size: 0.8125rem;
+  padding: 0.55rem 0.75rem;
+  text-align: left;
+  width: 100%;
+}
+.menu button:hover {
+  background: var(--surface-3);
+}
+
+.descriptionInput {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--ink-subtle);
+  font-size: 0.9375rem;
+  padding: 0.1rem 0.3rem;
+  width: 100%;
+}
+.descriptionInput::placeholder {
+  color: var(--ink-tertiary);
+}
+.descriptionInput:hover {
+  background: var(--surface-1);
+}
+.descriptionInput:focus-visible {
+  background: var(--surface-1);
+  color: var(--ink);
+  outline: 2px solid color-mix(in srgb, var(--primary-focus) 45%, transparent);
+}
+
+.metaLine {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+  margin: 0.35rem 0 1.5rem;
+}
+.slugText {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+.pickerGrid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+}
+
+.saveBar {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.75rem;
+}
+.saveBarLeft {
+  align-items: center;
+  display: flex;
+  gap: 0.6rem;
+}
+.shortcutHint {
+  color: var(--ink-tertiary);
+  font-size: 0.8125rem;
+}
+.unsavedCount {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 42rem) {
+  .pickerGrid {
+    grid-template-columns: 1fr;
+  }
+}
