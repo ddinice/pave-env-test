@@ -12,30 +12,130 @@ enum Role {
   ENGINEERING_LEAD
 }
 
+enum DesignChangeSource {
+  WEB
+  CLI
+  API
+}
+
+enum DesignChangeType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+enum DesignVariableField {
+  value
+  unit
+  name
+  description
+  subsystem
+  isProtected
+}
+
+enum AnalysisDirection {
+  PULL
+  PUSH
+}
+
 model User {
-  id                   String           @id @default(cuid())
-  email                String           @unique
+  id                   String                @id @default(cuid())
+  email                String                @unique
   name                 String
   role                 Role
   passwordHash         String
-  lastUpdatedVariables DesignVariable[] @relation("DesignVariableLastUpdatedBy")
-  createdAt            DateTime         @default(now())
-  updatedAt            DateTime         @updatedAt
+  lastUpdatedVariables DesignVariable[]      @relation("DesignVariableLastUpdatedBy")
+  changes              DesignChangeHistory[] @relation("DesignChangeAuthor")
+  models               AnalysisModel[]
+  runs                 WorkflowRun[]
+  createdAt            DateTime              @default(now()) @db.Timestamptz(3)
+  updatedAt            DateTime              @updatedAt @db.Timestamptz(3)
 }
 
 model DesignVariable {
-  id              String    @id @default(cuid())
-  externalKey     String    @unique
+  id              String                @id @default(cuid())
+  externalKey     String                @unique
   name            String
   value           String
   unit            String
   subsystem       String
   description     String
-  isProtected     Boolean   @default(false)
+  isProtected     Boolean               @default(false)
   updatedByUserId String?
-  updatedByUser   User?     @relation("DesignVariableLastUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  updatedByUser   User?                 @relation("DesignVariableLastUpdatedBy", fields: [updatedByUserId], references: [id], onDelete: SetNull)
+  history         DesignChangeHistory[]
+  modelItems      AnalysisModelItem[]
+  createdAt       DateTime              @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime              @updatedAt @db.Timestamptz(3)
 
   @@index([subsystem])
+  @@index([updatedByUserId])
+}
+
+model DesignChangeHistory {
+  id              String               @id @default(cuid())
+  variableId      String
+  variable        DesignVariable       @relation(fields: [variableId], references: [id], onDelete: Cascade)
+  changedByUserId String?
+  changedByUser   User?                @relation("DesignChangeAuthor", fields: [changedByUserId], references: [id], onDelete: SetNull)
+  runId           String?
+  run             WorkflowRun?         @relation(fields: [runId], references: [id], onDelete: SetNull)
+  source          DesignChangeSource
+  type            DesignChangeType     @default(UPDATED)
+  changeSetId     String
+  field           DesignVariableField?
+  oldValue        String?
+  newValue        String?
+  createdAt       DateTime             @default(now()) @db.Timestamptz(3)
+
+  @@index([variableId, createdAt(sort: Desc)])
+  @@index([changedByUserId])
+  @@index([changeSetId])
+  @@index([runId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model WorkflowRun {
+  id        String                @id @default(cuid())
+  modelId   String?
+  model     AnalysisModel?        @relation(fields: [modelId], references: [id], onDelete: SetNull)
+  label     String?
+  userId    String
+  user      User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  source    DesignChangeSource
+  changes   DesignChangeHistory[]
+  createdAt DateTime              @default(now()) @db.Timestamptz(3)
+
+  @@index([modelId, createdAt(sort: Desc)])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([createdAt(sort: Desc)])
+}
+
+model AnalysisModel {
+  id          String              @id @default(cuid())
+  slug        String              @unique
+  name        String
+  description String?
+  ownerId     String?
+  owner       User?               @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+  items       AnalysisModelItem[]
+  runs        WorkflowRun[]
+  createdAt   DateTime            @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime            @updatedAt @db.Timestamptz(3)
+
+  @@index([ownerId])
+}
+
+model AnalysisModelItem {
+  id         String            @id @default(cuid())
+  modelId    String
+  model      AnalysisModel     @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  variableId String
+  variable   DesignVariable    @relation(fields: [variableId], references: [id], onDelete: Cascade)
+  direction  AnalysisDirection
+  position   Int
+
+  @@unique([modelId, variableId, direction])
+  @@index([modelId, direction, position])
+  @@index([variableId])
 }

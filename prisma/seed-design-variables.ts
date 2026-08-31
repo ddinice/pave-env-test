@@ -1,8 +1,5 @@
-import type { PrismaClient } from "@prisma/client";
-
 import { designVariables } from "./seed-data";
-
-type DesignVariableClient = Pick<PrismaClient, "designVariable">;
+import type { DesignVariableClient } from "./types";
 
 export async function seedDesignVariables(db: DesignVariableClient, updatedByUserId: string) {
   await Promise.all(
