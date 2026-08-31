@@ -1,0 +1,54 @@
+.stats {
+  animation: fade-in-up 200ms ease-out both;
+  display: flex;
+  gap: 2.5rem;
+  margin: 0 0 1.25rem;
+}
+.stat > span {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+}
+.stat strong {
+  display: block;
+  font-feature-settings: "tnum";
+  font-size: 1.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  transition: color 160ms ease-out;
+}
+
+.warning,
+.notice {
+  animation: fade-in-up 200ms ease-out both;
+  border-radius: 8px;
+  display: grid;
+  font-size: 0.8125rem;
+  gap: 0.3rem;
+  margin: 0 0 0.75rem;
+  padding: 0.75rem 1rem;
+}
+.warning {
+  background: color-mix(in srgb, var(--red-500) 14%, var(--surface-1));
+  border: 1px solid color-mix(in srgb, var(--red-500) 38%, var(--hairline));
+  color: var(--ink-muted);
+}
+.warning strong {
+  color: var(--red-500);
+}
+.notice {
+  background: color-mix(in srgb, var(--yellow-500) 16%, var(--surface-1));
+  border: 1px solid color-mix(in srgb, var(--yellow-500) 40%, var(--hairline));
+  color: var(--ink-muted);
+}
+.notice strong {
+  color: var(--yellow-500);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stats,
+  .warning,
+  .notice {
+    animation-duration: 1ms;
+  }
+}

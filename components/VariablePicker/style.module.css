@@ -1,0 +1,182 @@
+.picker {
+  display: grid;
+  gap: 0.5rem;
+}
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.headerLeft {
+  align-items: center;
+  color: var(--ink);
+  display: inline-flex;
+  gap: 0.5rem;
+}
+.headerLeft svg {
+  flex-shrink: 0;
+  height: 1.05rem;
+  width: 1.05rem;
+}
+.headerLabel {
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+.headerCount {
+  color: var(--ink-subtle);
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+}
+.addTrigger {
+  background: transparent;
+  border: 0;
+  color: var(--primary-hover);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.2rem;
+}
+.addTrigger:hover {
+  text-decoration: underline;
+}
+
+.card {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.row {
+  align-items: center;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.65rem 0.9rem;
+}
+.row:last-child {
+  border-bottom: 0;
+}
+.rowKey {
+  color: var(--ink);
+  flex-shrink: 0;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+.rowName {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.rowMeta {
+  color: var(--ink-tertiary);
+  flex-shrink: 0;
+  font-size: 0.75rem;
+}
+.lockIcon {
+  color: #facc15;
+  flex-shrink: 0;
+  height: 0.85rem;
+  width: 0.85rem;
+}
+.rowRemove {
+  background: transparent;
+  border: 0;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  margin-left: auto;
+  padding: 0.15rem;
+}
+.rowRemove:hover {
+  color: var(--ink);
+}
+.emptyRow {
+  color: var(--ink-subtle);
+  font-size: 0.8125rem;
+  margin: 0;
+  padding: 0.85rem 0.9rem;
+}
+.moreButton {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  color: var(--primary-hover);
+  cursor: pointer;
+  display: block;
+  font-size: 0.8125rem;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  width: 100%;
+}
+.moreButton:hover {
+  text-decoration: underline;
+}
+
+.searchArea {
+  border-bottom: 1px solid var(--hairline);
+}
+.searchInputRow {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 0.9rem;
+}
+.searchInputRow svg {
+  color: var(--ink-subtle);
+  flex-shrink: 0;
+  height: 1rem;
+  width: 1rem;
+}
+.searchInputRow input {
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  flex: 1;
+  font-size: 0.8125rem;
+  min-width: 0;
+  padding: 0;
+}
+.searchInputRow input:focus-visible {
+  outline: none;
+}
+.results {
+  border-top: 1px solid var(--hairline);
+  list-style: none;
+  margin: 0;
+  max-height: 12rem;
+  overflow-y: auto;
+  padding: 0;
+}
+.resultRow {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.55rem 0.9rem;
+  text-align: left;
+  width: 100%;
+}
+.resultRow:not(:disabled):hover {
+  background: var(--surface-2);
+}
+.resultRow:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.enterHint {
+  color: var(--ink-tertiary);
+  font-size: 0.8125rem;
+  margin-left: auto;
+}
