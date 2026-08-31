@@ -4,13 +4,10 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 
 import { currentUser } from "../../lib/auth/current-user";
+import { listDesignVariableHistory } from "../../lib/design-variables/history";
+import type { DesignVariableHistoryPage } from "../../lib/design-variables/types";
 import { updateDesignVariable } from "../../lib/design-variables/service";
-
-export type ManualEditState = {
-  error?: string;
-  fieldErrors?: Record<string, string[] | undefined>;
-  status?: "updated";
-};
+import type { ManualEditState } from "./types";
 
 export async function updateVariable(_: ManualEditState, formData: FormData): Promise<ManualEditState> {
   const user = await currentUser();
@@ -31,4 +28,14 @@ export async function updateVariable(_: ManualEditState, formData: FormData): Pr
 
   revalidatePath("/variables");
   return { status: "updated" };
+}
+
+export async function loadDesignVariableHistory(
+  externalKey: string,
+  cursor?: string,
+): Promise<DesignVariableHistoryPage> {
+  const user = await currentUser();
+  if (!user) redirect("/login");
+
+  return listDesignVariableHistory({ externalKey, cursor });
 }

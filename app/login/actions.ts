@@ -5,10 +5,7 @@ import { redirect } from "next/navigation";
 import { startSession } from "../../lib/auth/session";
 import { verifyPassword } from "../../lib/auth/password";
 import { db } from "../../lib/db";
-
-export type LoginState = {
-  error?: string;
-};
+import type { LoginState } from "./types";
 
 const invalidCredentials: LoginState = { error: "Invalid email or password." };
 

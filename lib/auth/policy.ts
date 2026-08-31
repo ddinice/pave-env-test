@@ -1,10 +1,4 @@
-type VariableAccess = {
-  isProtected: boolean;
-};
-
-type UserAccess = {
-  role: "ANALYST" | "ENGINEERING_LEAD";
-};
+import type { UserAccess, VariableAccess } from "./types";
 
 export function canEditVariable(user: UserAccess | null | undefined, variable: VariableAccess): boolean {
   if (!user) return false;

@@ -1,17 +1,9 @@
 import { canEditVariable } from "../auth/policy";
-import { findDesignVariableByExternalKey, updateDesignVariableValue } from "./repository";
+import { changeDesignVariable } from "./change-service";
+import { ForbiddenVariableChangeError, VariableNotFoundError } from "./errors";
+import { findDesignVariableByExternalKey } from "./repository";
 import { manualValueSchema } from "./schemas";
-
-type UpdateUser = {
-  id: string;
-  role: "ANALYST" | "ENGINEERING_LEAD";
-};
-
-export type UpdateDesignVariableResult =
-  | { status: "updated"; variable: Awaited<ReturnType<typeof updateDesignVariableValue>> }
-  | { status: "not-found" }
-  | { status: "forbidden" }
-  | { status: "validation"; fieldErrors: Record<string, string[] | undefined> };
+import type { UpdateDesignVariableResult, UpdateUser } from "./types";
 
 export async function updateDesignVariable({
   externalKey,
@@ -30,11 +22,18 @@ export async function updateDesignVariable({
   const parsedValue = manualValueSchema.safeParse(input);
   if (!parsedValue.success) return { status: "validation", fieldErrors: parsedValue.error.flatten().fieldErrors };
 
-  const updated = await updateDesignVariableValue({
-    externalKey,
-    value: parsedValue.data,
-    updatedByUserId: user.id,
-  });
+  try {
+    const result = await changeDesignVariable({
+      externalKey,
+      input: { value: parsedValue.data.value, unit: parsedValue.data.unit },
+      user,
+      source: "WEB",
+    });
 
-  return { status: "updated", variable: updated };
+    return { status: "updated", variable: result.variable };
+  } catch (error) {
+    if (error instanceof VariableNotFoundError) return { status: "not-found" };
+    if (error instanceof ForbiddenVariableChangeError) return { status: "forbidden" };
+    throw error;
+  }
 }
