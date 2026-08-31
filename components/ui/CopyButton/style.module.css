@@ -1,0 +1,69 @@
+.wrapper {
+  display: inline-flex;
+  position: relative;
+}
+.button {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  display: inline-flex;
+  height: 1.75rem;
+  justify-content: center;
+  opacity: 1;
+  padding: 0.35rem;
+  transition: opacity 120ms ease;
+  width: 1.75rem;
+}
+.button:hover {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+.buttonHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.buttonLabeled {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  gap: 0.4rem;
+  padding: 0.45rem 0.75rem;
+  width: auto;
+}
+.buttonLabeled:hover {
+  background: var(--surface-2);
+  border-color: var(--ink-tertiary);
+}
+.button svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+.tooltip {
+  background: #29292d;
+  border: 1px solid #3b3b40;
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 500;
+  left: 50%;
+  opacity: 0;
+  padding: 0.35rem 0.5rem;
+  pointer-events: none;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  transform: translate(-50%, -0.2rem);
+  transition:
+    opacity 140ms ease,
+    transform 140ms ease;
+  white-space: nowrap;
+  z-index: 30;
+}
+.tooltipVisible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}

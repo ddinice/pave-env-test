@@ -2,7 +2,8 @@
 
 import { useActionState } from "react";
 
-import { login, type LoginState } from "../app/login/actions";
+import { login } from "../app/login/actions";
+import type { LoginState } from "../app/login/types";
 
 const initialState: LoginState = {};
 

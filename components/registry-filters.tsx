@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 
 import { Input } from "./ui/input";
-
-type Sort = "name" | "subsystem" | "updatedAt";
+import type { Sort } from "./types";
 
 export function RegistryFilters({
   query,

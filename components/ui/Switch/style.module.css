@@ -1,0 +1,42 @@
+.switch {
+  background: var(--surface-3);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  flex-shrink: 0;
+  height: 1.25rem;
+  padding: 1px;
+  transition:
+    background-color 140ms ease-out,
+    border-color 140ms ease-out;
+  width: 2.125rem;
+}
+.switch:hover {
+  border-color: var(--ink-tertiary);
+}
+.switch[aria-checked="true"] {
+  background: var(--primary);
+  border-color: transparent;
+}
+.switch:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.thumb {
+  background: white;
+  border-radius: 50%;
+  height: 1rem;
+  transition: transform 140ms ease-out;
+  width: 1rem;
+}
+.switch[aria-checked="true"] .thumb {
+  transform: translateX(0.85rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .switch,
+  .thumb {
+    transition-duration: 1ms;
+  }
+}

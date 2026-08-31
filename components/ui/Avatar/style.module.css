@@ -1,0 +1,15 @@
+.avatar {
+  align-items: center;
+  background: #c65a56;
+  border: 1px solid color-mix(in srgb, #fff 18%, transparent);
+  border-radius: 50%;
+  color: #fff;
+  cursor: default;
+  display: inline-flex;
+  font-size: 0.625rem;
+  font-weight: 700;
+  height: 1.375rem;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  width: 1.375rem;
+}

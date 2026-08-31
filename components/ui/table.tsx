@@ -1,5 +1,7 @@
 import type { TableHTMLAttributes } from "react";
 
-export function Table({ className = "", ...props }: TableHTMLAttributes<HTMLTableElement>) {
-  return <table className={`table ${className}`} {...props} />;
+import { cn } from "../../lib/utils";
+
+export function Table({ className, ...props }: TableHTMLAttributes<HTMLTableElement>) {
+  return <table className={cn("table", className)} {...props} />;
 }
