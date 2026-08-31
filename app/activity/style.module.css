@@ -1,0 +1,244 @@
+.filters {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  margin: 1rem 0 1.5rem;
+}
+.tab {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.4rem 0.7rem;
+}
+.tab:hover {
+  color: var(--ink);
+}
+.tabActive {
+  background: var(--surface-3);
+  color: var(--ink);
+}
+.divider {
+  background: var(--hairline-strong);
+  height: 1.2rem;
+  margin: 0 0.25rem;
+  width: 1px;
+}
+.filterSelect {
+  align-items: center;
+  color: var(--ink-subtle);
+  display: inline-flex;
+  gap: 0.35rem;
+  font-size: 0.8125rem;
+}
+.filterSelect svg {
+  height: 0.95rem;
+  width: 0.95rem;
+}
+.filterSelect select {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  min-height: 0;
+  padding: 0.2rem 0;
+  width: auto;
+}
+
+.dayLabel {
+  color: var(--ink-subtle);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin: 1.75rem 0 0.85rem;
+  text-transform: uppercase;
+}
+.dayLabel:first-child {
+  margin-top: 0;
+}
+
+.dayGroup {
+  position: relative;
+}
+.dayGroup::before {
+  background: var(--hairline);
+  bottom: 0.9rem;
+  content: "";
+  left: 0.875rem;
+  position: absolute;
+  top: 0.9rem;
+  width: 1px;
+}
+.entries {
+  display: grid;
+  gap: 1.25rem;
+}
+.entry {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: 1.75rem 1fr;
+  position: relative;
+}
+.entryIcon {
+  align-items: center;
+  background: var(--surface-2);
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  color: var(--ink-subtle);
+  display: flex;
+  height: 1.75rem;
+  justify-content: center;
+  width: 1.75rem;
+  z-index: 1;
+}
+.entryIcon svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+.entryAvatar {
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  height: 1.75rem;
+  justify-content: center;
+  width: 1.75rem;
+  z-index: 1;
+}
+
+.entryLine {
+  color: var(--ink-muted);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  margin: 0.15rem 0 0;
+}
+.entryLine strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.entryLine code {
+  background: var(--surface-2);
+  border-radius: 4px;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.8125rem;
+  padding: 0.1rem 0.3rem;
+}
+.entryTime {
+  color: var(--ink-tertiary);
+}
+.oldValue {
+  color: var(--ink-tertiary);
+  text-decoration: line-through;
+}
+
+.summaryToggle {
+  background: transparent;
+  border: 0;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  display: block;
+  font-size: 0.8125rem;
+  padding: 0.15rem 0 0;
+  text-align: left;
+}
+.summaryToggle:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.runCard {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+.runRow {
+  align-items: center;
+  border-bottom: 1px solid var(--hairline);
+  display: flex;
+  font-size: 0.8125rem;
+  gap: 0.6rem;
+  justify-content: space-between;
+  padding: 0.6rem 0.9rem;
+}
+.runRow:last-child {
+  border-bottom: 0;
+}
+.runRowKey {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+.runRowValues {
+  align-items: center;
+  display: flex;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  gap: 0.4rem;
+}
+.runMore {
+  background: transparent;
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  color: var(--ink-subtle);
+  cursor: default;
+  display: block;
+  font-size: 0.8125rem;
+  padding: 0.5rem 0.9rem;
+  text-align: center;
+  width: 100%;
+}
+.collapseToggle {
+  background: transparent;
+  border: 0;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  display: block;
+  font-size: 0.8125rem;
+  padding: 0.5rem 0.9rem;
+  text-align: center;
+  width: 100%;
+}
+.collapseToggle:hover {
+  color: var(--ink);
+}
+
+.revertButton {
+  align-items: center;
+  background: transparent;
+  border: 0;
+  color: var(--ink-subtle);
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.8125rem;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  padding: 0.2rem;
+}
+.revertButton:hover {
+  color: var(--ink);
+}
+.revertButton:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.revertButton svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.loadMore {
+  display: block;
+  margin: 2rem auto 0;
+}
+
+.empty {
+  color: var(--ink-subtle);
+  font-size: 0.875rem;
+  padding: 2rem 0;
+  text-align: center;
+}
