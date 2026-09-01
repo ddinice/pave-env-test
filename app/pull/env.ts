@@ -1,12 +1,20 @@
-import type { EnvLine, FillStats } from "./types";
+import type { TextLine, FillStats } from "./types";
 
-export function entryLines(lines: EnvLine[]): { key: string; value: string }[] {
+export function entryLines(lines: TextLine[]): { key: string; value: string }[] {
   return lines
-    .filter((line): line is Extract<EnvLine, { type: "entry" }> => line.type === "entry")
+    .filter(
+      (line): line is Extract<TextLine, { type: "entry" }> =>
+        line.type === "entry",
+    )
     .map((line) => ({ key: line.key, value: line.value }));
 }
 
-export function parseEnv(text: string): EnvLine[] {
+/**
+ * Returns:
+ * type: "raw" - when the line is a comment or isnot a valid key-value pair,
+ * type: "entry" - when the line is a key-value pair, and type.
+ */
+export function parseEnv(text: string): TextLine[] {
   return text.split("\n").map((line) => {
     const trimmed = line.trim();
     if (trimmed === "" || trimmed.startsWith("#")) {
@@ -14,7 +22,8 @@ export function parseEnv(text: string): EnvLine[] {
     }
 
     const withValue = /^([^=\s][^=]*?)=(.*)$/.exec(line);
-    if (withValue) return { type: "entry", key: withValue[1].trim(), value: withValue[2] };
+    if (withValue)
+      return { type: "entry", key: withValue[1].trim(), value: withValue[2] };
 
     const bareKey = /^[A-Za-z0-9_.-]+$/.exec(trimmed);
     if (bareKey) return { type: "entry", key: trimmed, value: "" };
@@ -24,7 +33,7 @@ export function parseEnv(text: string): EnvLine[] {
 }
 
 export function fillEnv(
-  lines: EnvLine[],
+  lines: TextLine[],
   values: Record<string, { value: string; subsystem: string }>,
   formatted = false,
 ): { output: string; stats: FillStats } {
@@ -33,7 +42,7 @@ export function fillEnv(
   let filled = 0;
   let total = 0;
 
-  function match(line: Extract<EnvLine, { type: "entry" }>) {
+  function match(line: Extract<TextLine, { type: "entry" }>) {
     total += 1;
     const found = values[line.key];
     if (found === undefined) {
@@ -87,5 +96,8 @@ export function fillEnv(
     sections.push(["# Not found", ...unmatched].join("\n"));
   }
 
-  return { output: sections.join("\n\n"), stats: { total, filled, notFound, stale } };
+  return {
+    output: sections.join("\n\n"),
+    stats: { total, filled, notFound, stale },
+  };
 }

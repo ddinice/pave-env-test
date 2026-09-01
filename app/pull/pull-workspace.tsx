@@ -11,7 +11,7 @@ import { generateStarterFromModel } from "./actions";
 import { EnvOutput } from "./env-output";
 import { parseEnv } from "./env";
 import styles from "./style.module.css";
-import { useEnvFiller } from "./use-env-filler";
+import { useFiller } from "./use-filler";
 import { PullStats } from "../../components/PullStats/pull-stats";
 import { PullFormats } from "../../components/PullFormats/pull-formats";
 
@@ -29,7 +29,7 @@ export function PullWorkspace({
     isPending,
     formatted,
     setFormatted,
-  } = useEnvFiller();
+  } = useFiller();
   const [starterModelId, setStarterModelId] = useState("");
   const [isGeneratingStarter, startGeneratingStarter] = useTransition();
   const textareaRef = useRef<HTMLTextAreaElement>(null);

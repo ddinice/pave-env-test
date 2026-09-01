@@ -1,4 +1,4 @@
-export type EnvLine =
+export type TextLine =
   | { type: "raw"; text: string }
   | { type: "entry"; key: string; value: string };
 
@@ -10,3 +10,5 @@ export type FillStats = {
 };
 
 export type EnvMatch = { value: string; subsystem: string };
+
+export type FillerType = "env" | "json" | "csv";

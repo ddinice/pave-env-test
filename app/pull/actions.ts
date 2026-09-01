@@ -7,7 +7,7 @@ import { findDesignVariablesByExternalKeys } from "../../lib/design-variables/re
 import { listModelPullVariables } from "../../lib/analysis-models/repository";
 import type { EnvMatch } from "./types";
 
-export async function fillEnvValues(keys: string[]): Promise<Record<string, EnvMatch>> {
+export async function fetchVariableValues(keys: string[]): Promise<Record<string, EnvMatch>> {
   const user = await currentUser();
   if (!user) redirect("/login");
 
